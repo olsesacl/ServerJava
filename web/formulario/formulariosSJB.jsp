@@ -1,8 +1,3 @@
-<%-- 
-    Document   : formulario
-    Created on : 14-dic-2015, 19:18:01
-    Author     : 2daw
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,7 +15,7 @@
                 
             
             %>
-            <form name="form" action="formulario.jsp" method="POST">
+            <form name="form" action="formulariosSJB.jsp" method="POST">
                 Su nombre:<input type="text" name="name" value="" size="26"/><br>
                 Su email:<input type="text" name="email" value="" size="26"/><br>
                 <input type="submit" value="Enviar" name="send" />
