@@ -9,6 +9,8 @@ import DAO.DB;
 import Entidad.Participante;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -69,6 +71,21 @@ public class JavaHibernate {
        session.beginTransaction();
        session.delete(participante3);
        session.getTransaction().commit();
+       
+       
+       //usar query creada en el archivo Participante.hbm.xml
+       
+       System.out.println("\nLlamada a query en el XML");
+       Query query = session.getNamedQuery("findAllParticipantes");
+       
+       List<Participante> participantes = query.list();
+       
+       for (Participante participanteXML:participantes){
+           System.out.println("-------------------------------------------");
+           System.out.println(participanteXML.toString());
+           System.out.println("-------------------------------------------");
+       }
+       
        
        session.close();
        sessionFactory.close();

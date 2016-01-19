@@ -68,6 +68,13 @@ public class Participante implements Serializable {
     public void setClub(String club) {
         this.club = club;
     }
+
+    @Override
+    public String toString() {
+        return "Participante{" + "dorsal=" + dorsal + ", nombre=" + nombre + ", apellidos=" + apellidos + ", poblacion=" + poblacion + ", club=" + club + '}';
+    }
+    
+    
     
     
 }

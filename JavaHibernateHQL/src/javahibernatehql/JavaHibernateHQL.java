@@ -46,7 +46,7 @@ public class JavaHibernateHQL {
              * Uso de list con datos escalares
              */
             
-            System.out.println("Uso de list con datos escalares");
+            System.out.println("\nUso de list con datos escalares");
             System.out.println("=========================");
 
             //es un select sobre la clase Participante, no sobre la tabla de la base de datos
@@ -67,7 +67,7 @@ public class JavaHibernateHQL {
              * Uso de list con un unico dato escalar
              */
             
-            System.out.println("Uso de list con un unico dato escalar");
+            System.out.println("\nUso de list con un unico dato escalar");
             System.out.println("=========================");
 
             //es un select sobre la clase Participante, no sobre la tabla de la base de datos
@@ -89,7 +89,7 @@ public class JavaHibernateHQL {
              * Uso de unique result
              */
             
-            System.out.println("Uso de unique result");
+            System.out.println("\nUso de unique result");
             System.out.println("=========================");
             
             String hql = "SELECT p FROM Participante p WHERE p.dorsal=656";
@@ -98,6 +98,55 @@ public class JavaHibernateHQL {
             
             System.out.println("Participante con dorsal 656:");
             System.out.println(participante.toString());
+        }
+        
+        
+        {
+            /***
+             * Mostrar una pagina
+             */
+            
+            System.out.println("\nMostrar una pagina");
+            System.out.println("=========================");
+            
+            int tamanyoPagina = 10;
+            int paginaMostrar = 7;
+            
+            String hql = "SELECT p FROM Participante p ORDER BY p.dorsal";
+            
+            Query query = session.createQuery(hql);
+            query.setMaxResults(tamanyoPagina);
+            query.setFirstResult(paginaMostrar*tamanyoPagina);
+            
+            List<Participante> listaParticipantes = query.list();
+            
+            for (Participante participante : listaParticipantes) {
+                System.out.println("-------------------------");
+                System.out.println(participante.toString());
+                System.out.println("-------------------------");
+            }
+           
+        }
+        
+        {
+            /***
+             * Calcular el numero de paginas
+             */
+            
+            System.out.println("\nCalcular el numero de paginas");
+            System.out.println("=========================");
+            
+            int tamanyoPagina = 10;
+            
+            long numTotalObjetos = (long)session.createQuery("SELECT COUNT(*) FROM Participante p").uniqueResult();
+            
+            //Math.ceil es para hacer el redondeo al alza
+            //se pone lo de double porque sino al hacer la operacion lo transforma a int redondeando como no queremos
+            int numPaginas = (int) Math.ceil(numTotalObjetos/(double)tamanyoPagina);
+            
+            System.out.println("El numero total de paginas es: " + numPaginas);
+            
+            
         }
         
         

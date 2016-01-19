@@ -9,4 +9,13 @@
         <property column="CLUB" name="club" />
     </class>
     
+    <!-- Para crear query desde el xml -->
+    <query name="findAllParticipantes">
+        <![CDATA[
+            SELECT p FROM Participante p
+        ]]>
+        
+    </query>
+    
+    
 </hibernate-mapping>
