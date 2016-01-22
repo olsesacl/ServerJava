@@ -6,6 +6,7 @@
 package hibernatevalidaciones;
 
 import entidad.Profesor;
+import entidad.Usuario;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.hibernate.Session;
@@ -22,32 +23,61 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        
-        Profesor profesor = new Profesor("CA", null, null);
-        
-        SessionFactory sessionFactory = Utils.HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        
-        try{
+        /*{ 
+            Profesor profesor = new Profesor("CA", null, null);
 
-            session.beginTransaction();
-            session.save(profesor);
-            
-            session.getTransaction().commit();
+            SessionFactory sessionFactory = Utils.HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.openSession();
 
-            
-        } catch (ConstraintViolationException ex){
-            
-            session.getTransaction().rollback();
-            System.out.println("No se ha podido realizar la inserción");
-            
-            for (ConstraintViolation e : ex.getConstraintViolations()) {
-                System.out.println("En el campo " + e.getPropertyPath() + ": " + e.getMessage());
+            try{
+
+                session.beginTransaction();
+                session.save(profesor);
+
+                session.getTransaction().commit();
+
+
+            } catch (ConstraintViolationException ex){
+
+                session.getTransaction().rollback();
+                System.out.println("No se ha podido realizar la inserción");
+
+                for (ConstraintViolation e : ex.getConstraintViolations()) {
+                    System.out.println("En el campo " + e.getPropertyPath() + ": " + e.getMessage());
+                }
+
+            } finally{
+                session.close();
+                sessionFactory.close();
             }
-            
-        } finally{
-            session.close();
-            sessionFactory.close();
+        }*/
+        
+        {
+            Usuario usuario = new Usuario("pep", "Pep", "Garcia", "Garcia2", "123456789", "987654321");
+            SessionFactory sessionFactory = Utils.HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            try{
+
+                session.beginTransaction();
+                session.save(usuario);
+
+                session.getTransaction().commit();
+
+
+            } catch (ConstraintViolationException ex){
+
+                session.getTransaction().rollback();
+                System.out.println("No se ha podido realizar la inserción");
+
+                for (ConstraintViolation e : ex.getConstraintViolations()) {
+                    System.out.println("En el campo " + e.getPropertyPath() + ": " + e.getMessage());
+                }
+
+            } finally{
+                session.close();
+                sessionFactory.close();
+            }
         }
         
     }
