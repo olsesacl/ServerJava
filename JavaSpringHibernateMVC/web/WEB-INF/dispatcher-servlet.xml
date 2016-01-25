@@ -20,6 +20,7 @@
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
+                <prop key="participantes.html">ParticipanteController</prop>
             </props>
         </property>
     </bean>
