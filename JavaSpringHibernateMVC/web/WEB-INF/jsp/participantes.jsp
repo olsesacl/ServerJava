@@ -21,10 +21,10 @@
             
             <c:forEach var="participante" items="${listaParticipantes}">
                 <tr>
-                    <td><c:out value="${participante.getNombre}"></c:out></td>
-                    <td><c:out value="${participante.getApellidos}"></c:out></td>
-                    <td><c:out value="${participante.getPoblacion}"></c:out></td>
-                    <td><c:out value="${participante.getClub}"></c:out></td>             
+                    <td><c:out value="${participante.getNombre()}"></c:out></td>
+                    <td><c:out value="${participante.getApellidos()}"></c:out></td>
+                    <td><c:out value="${participante.getPoblacion()}"></c:out></td>
+                    <td><c:out value="${participante.getClub()}"></c:out></td>             
                 </tr>
                 
             </c:forEach>

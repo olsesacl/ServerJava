@@ -23,7 +23,7 @@ public class ParticipanteDAO {
             
             Session session = HibernateUtil.getSessionFactory().openSession();
             
-            String hql = "FROM Participantes";
+            String hql = "SELECT p FROM Participantes p";
             Query q = session.createQuery(hql);
             return q.list();
             
