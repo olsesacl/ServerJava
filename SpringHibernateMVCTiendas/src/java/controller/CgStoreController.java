@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DAO.CgStoreDAO;
 import model.entidad.CgStore;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -17,6 +21,7 @@ import org.springframework.web.servlet.mvc.Controller;
  *
  * @author 2daw
  */
+
 public class CgStoreController implements Controller{
 
     @Override
@@ -28,10 +33,14 @@ public class CgStoreController implements Controller{
         try{
             //Arrepleguem les dades del model i les enviem a la vista
             mv.addObject("Titulo","Listado de tiendas");
+            mv.addObject("mensaje","Este es un mensaje enviado desde el controlador");
             
             List<CgStore> lista = CgStoreDAO.listaTiendas();
             
-            mv.addObject(lista);
+            //carpeta base
+            mv.addObject("cp",hsr.getContextPath());
+            
+            mv.addObject("lista",lista);
             
             return mv;
             
@@ -40,6 +49,15 @@ public class CgStoreController implements Controller{
             e.printStackTrace();
             return null;
         }
+    }
+    
+    @RequestMapping(value="/borrar//{id}", method=RequestMethod.GET)
+    public String borrar(@PathVariable("id") int id, ModelMap map, HttpServletRequest request){
+        
+        System.out.println("test");
+        
+        return "/borrar";
+        
     }
     
 }

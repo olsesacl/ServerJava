@@ -14,10 +14,12 @@
         <%
             String titulo = request.getAttribute("Titulo").toString();
         %>
-        <title><%= titulo %></title>
+        <title>${titulo}</title>
     </head>
     <body>
         <h1>Listado de tiendas</h1>
+        <h2>${mensaje}</h2>
+        
         
         <table border="1">
             
@@ -26,6 +28,8 @@
                     <td><c:out value="${tienda.getStoreName()}"></c:out></td>
                     <td><c:out value="${tienda.getStoreAddress()}"></c:out></td>
                     <td><c:out value="${tienda.getStoreCity()}"></c:out></td>
+                    <td><a href="${cp}/borrar/${tienda.getStoreId()}">Borrar</a></td>
+                    <td><a href="">Editar</a></td>
                 </tr>
                 
             </c:forEach>
