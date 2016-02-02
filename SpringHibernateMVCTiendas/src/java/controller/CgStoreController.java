@@ -51,8 +51,10 @@ public class CgStoreController implements Controller{
         }
     }
     
-    @RequestMapping(value="/borrar//{id}", method=RequestMethod.GET)
+    @RequestMapping({"/borrar/{id}"})
     public String borrar(@PathVariable("id") int id, ModelMap map, HttpServletRequest request){
+        
+        ModelAndView mv = new ModelAndView("borrar");
         
         System.out.println("test");
         

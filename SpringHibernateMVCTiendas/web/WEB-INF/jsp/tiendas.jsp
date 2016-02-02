@@ -28,7 +28,7 @@
                     <td><c:out value="${tienda.getStoreName()}"></c:out></td>
                     <td><c:out value="${tienda.getStoreAddress()}"></c:out></td>
                     <td><c:out value="${tienda.getStoreCity()}"></c:out></td>
-                    <td><a href="${cp}/borrar/${tienda.getStoreId()}">Borrar</a></td>
+                    <td><a href="<%= request.getContextPath() %>/borrar/${tienda.getStoreId()}">Borrar</a></td>
                     <td><a href="">Editar</a></td>
                 </tr>
                 
