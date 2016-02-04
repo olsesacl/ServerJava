@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="usuario" scope="request" class="Entidad.Usuario" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +13,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        Los datos son<br>
+        Nombre: <jsp:getProperty name="usuario" property="name"/><br>
+        Email: <jsp:getProperty name="usuario" property="email"/><br>
     </body>
 </html>
