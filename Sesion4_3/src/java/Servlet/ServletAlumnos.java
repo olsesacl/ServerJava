@@ -18,7 +18,8 @@ import jdk.nashorn.internal.runtime.ListAdapter;
  */
 @WebServlet(name = "ServletAlumnos", urlPatterns = {"/ServletAlumnos"})
 public class ServletAlumnos extends HttpServlet {
-     ArrayList <AlumnoBean> lista = new ArrayList<AlumnoBean>();;
+    
+     ArrayList <AlumnoBean> lista = new ArrayList<AlumnoBean>();
 
     @Override
     public void init() throws ServletException {
@@ -61,10 +62,13 @@ public class ServletAlumnos extends HttpServlet {
             }
         }*/
         if(alumno != null){
+            
            request.setAttribute("alumno", alumno);
-        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/MuestraDatosAlumno.jsp");
-        rd.forward(request, response); 
+            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/MuestraDatosAlumno.jsp");
+            rd.forward(request, response);
+        
         } else {
+            
             PrintWriter out = response.getWriter();
             out.println("No se ha encontrado el DNI");
         }

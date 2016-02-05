@@ -37,7 +37,7 @@ public class CapturaDatosVideoClub extends HttpServlet {
         
         AlquilerBean alquiler = new AlquilerBean();
         alquiler.setDias(request.getParameter("dias"));
-        alquiler.setEdad(request.getParameter("dias"));
+        alquiler.setEdad(request.getParameter("edad"));
         alquiler.setExtras(request.getParameter("extras"));
         alquiler.setPago(request.getParameter("pago"));
         alquiler.setPelicula(request.getParameter("pelicula"));
