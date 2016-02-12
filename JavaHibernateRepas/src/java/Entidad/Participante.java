@@ -6,13 +6,12 @@
 package Entidad;
 
 import java.io.Serializable;
-
+//entidad y bean es lo mismo
 /**
  *
- * @author 2daw
+ * @author isaa
  */
 public class Participante implements Serializable{
-    
     private int dorsal;
     private String nombre;
     private String apellidos;
@@ -69,6 +68,7 @@ public class Participante implements Serializable{
     public void setClub(String club) {
         this.club = club;
     }
+    
     
     
 }

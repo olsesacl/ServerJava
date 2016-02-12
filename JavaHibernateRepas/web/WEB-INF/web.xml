@@ -4,9 +4,33 @@
         <servlet-name>ParticipanteController</servlet-name>
         <servlet-class>Controller.ParticipanteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegistrarParticipante</servlet-name>
+        <servlet-class>Controller.RegistrarParticipante</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditarParticipante</servlet-name>
+        <servlet-class>Controller.EditarParticipante</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BorrarParticipante</servlet-name>
+        <servlet-class>Controller.BorrarParticipante</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ParticipanteController</servlet-name>
         <url-pattern>/ParticipanteController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistrarParticipante</servlet-name>
+        <url-pattern>/RegistrarParticipante</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditarParticipante</servlet-name>
+        <url-pattern>/EditarParticipante</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BorrarParticipante</servlet-name>
+        <url-pattern>/BorrarParticipante</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
