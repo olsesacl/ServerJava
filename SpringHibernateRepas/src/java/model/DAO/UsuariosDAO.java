@@ -25,7 +25,7 @@ public class UsuariosDAO {
             
             Session session = HibernateUtil.getSessionFactory().openSession();
             
-            String hql = "SELECT p FROM Usuarios u";
+            String hql = "SELECT u FROM Usuarios u";
             Query query = session.createQuery(hql);
             
             lista = (ArrayList<Usuarios>) query.list();
