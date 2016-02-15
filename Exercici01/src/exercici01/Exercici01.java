@@ -26,13 +26,13 @@ public class Exercici01 {
       } 
       long now = System.currentTimeMillis();
       
-        exerciciHibernate1.Seguro seguro = new exerciciHibernate1.Seguro(2, "73037041T", "Paco", "Sanchis", "Climent", 32, 0, new Date(now));
+        Seguro seguro = new Seguro(2, "73037041T", "Paco", "Sanchis", "Climent", 32, 0, new Date(now));
         Session session = factory.openSession();
         session.beginTransaction();
         session.save(seguro);
         session.getTransaction().commit();
         
-        exerciciHibernate1.Seguro seguro2=(exerciciHibernate1.Seguro) session.get(exerciciHibernate1.Seguro.class,2);
+        Seguro seguro2=(Seguro) session.get(Seguro.class,2);
         System.out.println(seguro.toString());
         
         seguro2.setNombre("Pepe");
@@ -40,7 +40,7 @@ public class Exercici01 {
         session.update(seguro2);
         session.getTransaction().commit();
         
-        exerciciHibernate1.Seguro seguro3 = (exerciciHibernate1.Seguro) session.get(exerciciHibernate1.Seguro.class, 2);
+        Seguro seguro3 = (Seguro) session.get(Seguro.class, 2);
        
         session.beginTransaction();
         session.delete(seguro3);
