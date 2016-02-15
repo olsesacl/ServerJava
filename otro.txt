@@ -1,0 +1,103 @@
+******
+SPRINGHIBERNATEREPAS
+***********************************************
+
+creas proyecto
+nombre 
+- en Frameworks seleccionamos:
+	Spring Web MVC
+	Hibernate 4.3.1
+	->En database connection-> new database connection
+	->driver MySQL->Next
+	->en Database pones el nombre de la base de datos que quieres utilizar
+	-> Test connection
+	-> Next
+- Finish finish
+- En /Source Packages/<default package>/hibernate.cfg.xml 
+	En principio te lo habrá configurado bien si no:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/empresa?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+  </session-factory>
+</hibernate-configuration>
+
+- Hemos de crear una capa 
+- En /Source Packages creamos un Package que se llame Model.Util
+-> En Model.Util creamos un HibernateUtil.java llamado HibernateUtil
+- Otra capa que se llame model.Entidad
+	-> allí hago un Hibernate Reverse Engineering Wizard
+	-> En Database Tables -> añadir usuarios o los que toquen -> Finish
+- En model.Entidad creo Hibernate Mapping files and POJOs from Database
+	-> Aquí Seleccionamos EJB 3 Annotations
+	-> Se crea Usuarios.java con las notaciones en Model.Entidad
+- Ahora en En /Source Packages/<default package>/hibernate.cfg.xml 
+ podemos ver que tenemos añadido esto:
+<mapping class="Model.Entidad.Usuarios"/>
+
+- Creamos el model.DAO
+	-> Dentro creamos UsuariosDAO (aquí escribiremos los métodos de guardar, listar)
+	-> Primer método
+	public static ArrayList<Usuarios> getListaUsuarios(){  
+        ArrayList<Usuarios> lista = null;
+        
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "SELECT u FROM Usuarios u";    //(OJO!! Miramos la clase, no la base de datos )
+            
+            Query query = session.createQuery(hql);     //(OJO importar hibernate)
+            lista = (ArrayList<Usuarios>) query.list();  //Casting de los guapos           
+  
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }      
+        return lista;
+    } 
+
+- Creamos el package Controller
+	-> Dentro creamos la clase UsauariosController.java
+	-> en la cabecera tenemos que poner public class UsauariosController implements Controller
+	-> Hacemos import del de Servlet -> import org.springframework.web.servlet.mvc.Controller;
+	-> Hacemos un import all abstract methods (que añade un montón de pirulas)
+	-> con lo que ha creado nos vamos a "public ModelAndView" y borramos lo de dentro y pones esto :
+
+@Override
+    public ModelAndView handleRequest(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("usuarios");    //(lista que tendremos que crear) se supone que llamará a una vista llamada usuarios.jsp       
+        //(llamada a usuariosDAO)
+        ArrayList<Usuarios> lista = UsuariosDAO.getListaUsuarios();
+        mv.addObject("listaUsuarios",lista);    //javabean   
+        return mv;
+    }
+
+- En WEB-INF\jsp\ creo usuarios.jsp
+- En WEB-INF\jsp\indx.jsp borro todo lo del body y pongo esto de abajo 
+<a href="listadoUsuarios.htm">Lista de usuarios</a>
+
+- Me voy al WEB-INF\dispatcher-servlet.xml
+	->debajo del segundo <bean añado
+<bean class="Controller.UsuariosController" id="UsuariosController"/> -> me voy donde estan los props y añado uno
+	<prop key="listadoUsuarios.htm">UsuariosController</prop> <!-- Esto es lo que hemos puesto en el index -->
+
+- Me voy a usuarios.jsp y debajo de "page añado
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+-> en el body
+<h1>Listado de usuarios</h1>
+        <table border="1">
+            <c:forEach var="users" items="$(listaUsuarios)">
+                <tr>
+                    <td><c:out value="${usuario.getNombre()}"> </c:out></td>
+                    <td><c:out value="${usuario.getClave()}"> </c:out></td>
+                    <td><c:out value="${usuario.getEmail()}"> </c:out></td>
+                </tr>
+            </c:forEach>
+            
+        </table>
+
+

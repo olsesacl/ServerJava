@@ -1,0 +1,113 @@
+************************************
+ENCENDER XAMPPPPPPPPPPP
+*************************************
+
+cursohibernate.es
+
+Java Hibernate
+marcar Use Dedicated Folder
+.\lib
+Allí se ponen
+Next
+Next
+En Frameworks elegir->
+Hibernate 4.3.1
+Seleccionar la base de datos que queremos utilizar
+
+2- 
+- Package Entidad
+- Java Class Participante
+añadir el implements Serializable
+import java.io.Serializable;
+2 contructores:
+	-1 vacío
+	- otro con todos
+-Getters y setters
+-Nuevo hibernate mapping wizard
+-Cambiar el nombre igual que la entidad Participante.hbm
+-Buscas el mismo nombre que toca en el Class to Map  - >             Entidad.Participante
+-Database table la que necesitemos
+Comprobamos que en hibernate.cfg aparece el mapping a lo que hemos creado     <mapping resource="Entidad/Participante.hbm.xml"/>
+- EN Participante.hbm quitamos la barra de cerrado del class y dentro de </class> ponemos
+Queda así
+    <class name="Entidad.Participante" table="participantes">
+        <id column="Dorsal" name="dorsal" type="integer"></id>
+        <property name="nombre" column="Nombre"></property>
+        <property name="apellidos" column="Apellidos"></property>
+        <property name="poblacion" column="Poblacion"></property>
+        <property name="club" column="CLUB"></property>
+    </class>
+-Creamos un index.jsp
+-Package DAO
+- ParticipanteDAO
+-Necesitamos abrir conexión creamos un package Utils
+- New Other -> hibernateUtil FINISH
+- En ParticipanteDAO vamos a crear Guardar
+-Creamos estós métodos estáticos
+-public static void guardar(Participante participante){
+-public static ArrayList<Participante> getAllParticipantes (){
+-public static Participante getParticipanteByDorsal(int dorsal){
+
+
+- Package Controller
+- New Servlet ParticipanteController -> next -> add information
+-> finish
+- Borramos toda la KAKA del try
+- Solo pongo esto:
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        ArrayList<Participante> listaPart = ParticipanteDAO.getAllParticipantes();
+        request.setAttribute("listaPart", listaPart);
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+    }
+
+- ahora en index.jsp  ponemos toda la pesca para que haga la lista
+
+- por ultimo en /webinf/web.xml cambiamos el wellcome file y ponemos dentro ParticipanteController
+
+- creamos archivo insertar.jsp para que se cargue cuando le damos a añadir registro con un formulario con todas las variables en la entidad, en action lo enviamos a registrarParticipante
+
+- Creo el servlet en controller que se llame registrarParticipante -> next -> add information
+- quito todo lo del try de registrarParticipante 
+- recojo todo lo del form
+		int dorsal = Integer.parseInt(request.getParameter("dorsal"));
+        String nombre = request.getParameter("nombre");
+        String apellidos = request.getParameter("apellidos");
+        String poblacion = request.getParameter("poblacion");
+        String club = request.getParameter("club");
+
+Participante part = new Participante(dorsal, nombre, apellidos, poblacion, club);
+
+- Volvemos al Index.jsp vamos a hacer el EditarParticipante <a href="EditarParticipante?dorsal=<%= part.getDorsal()%>" >Editar</a>
+
+- Creamos el controller (servlet) EditarParticipante 
+borramos todo y recogemos al participante
+	int dorsal = Integer.parseInt(request.getParameter("dorsal"));
+            
+    Participante part = ParticipanteDAO.getParticipanteByDorsal(dorsal);
+            
+    request.setAttribute("participante", part);     //Aquí hemos guardado el javabean
+    request.getRequestDispatcher("/editar.jsp").forward(request, response);
+
+- creamos el editar.jsp
+le ponemos el mismo formulario de insertar
+UseBean
+Id: participante (da igual)
+Class: Entidad.Participante (igual que lo tenemos)
+Scope: request
+
+GetbeanProperty
+Bean name: participante
+Property Name: dorsal 
+y así con los demás
+
+- Creamos en el participanteDAO el método borrar
+
+- Ahora ponemos el link borrar en index.jsp
+- creamos controlador servlet BorrarParticipante en Controller
+Borro todo lo del try y pongo
+            int dorsal = Integer.parseInt(request.getParameter("dorsal")); 
+            Participante part = ParticipanteDAO.getParticipanteByDorsal(dorsal);
+            ParticipanteDAO.borrar(part);
+            response.sendRedirect("/borrar.jsp");
